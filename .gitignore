@@ -1,7 +1,4 @@
-# NOTE: we deploy `_site/` via GitHub Actions (static upload), so it must be committed.
-# If you prefer not to commit build artifacts, revert this and switch the workflow to build Jekyll in CI.
-# (GitHub Pages' default Jekyll build will likely fail for this repo due to custom plugins.)
-# _site
+_site
 .bundle
 .sass-cache
 .jekyll-cache
