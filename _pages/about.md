@@ -24,10 +24,3 @@ I study comparative politics and political methodology, with regional focus in C
 
 In 2023, I received A.M. degree in development study and social policy from China Agricultural University.
 In 2020, I received an LL.B. degree in Law from Shanghai University of Finance and Economics.
-
-## Activities & Conferences
-
-- **May 2025** - Presented at Fudan-UCSB Young Talented Scholars Conference, San Diego
-- **September 2024** - APSA Annual Meeting, Philadelphia
-- **April 2024** - Hong Kong Quantitative Social Science Workshop, Hong Kong
-- **November 2022** - Lien Development Conference, Singapore

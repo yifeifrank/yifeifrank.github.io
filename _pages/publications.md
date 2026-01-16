@@ -18,3 +18,10 @@ nav_order: 2
 {% bibliography %}
 
 </div>
+
+## Activities & Conferences
+
+- **May 2025** - Presented at Fudan-UCSB Young Talented Scholars Conference, San Diego
+- **September 2024** - APSA Annual Meeting, Philadelphia
+- **April 2024** - Hong Kong Quantitative Social Science Workshop, Hong Kong
+- **November 2022** - Lien Development Conference, Singapore
