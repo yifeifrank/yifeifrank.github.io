@@ -5,6 +5,7 @@
 ---
 
 ## Conferences
+
 - San Diego, Fudan-UCSB Young talented scholars conference, May. 6, 2025
 - Philadelphia, APSA annual meeting, Sep. 8, 2024
 - Hong Kong, Hong Kong quantitative social science workshop, Apr. 24, 2024
