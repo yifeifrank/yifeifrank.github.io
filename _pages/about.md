@@ -7,7 +7,7 @@ subtitle: <a href='https://www.ppa.hku.hk/'>Department of Politics and Public Ad
 profile:
   align: left
   image: prof_pic.jpg
-  image_circular: true # crops the image to make it circular
+  image_circular: false # crops the image to make it circular
   more_info: >
     <p>University of Hong Kong</p>
     <p>Department of Politics and Public Administration</p>
