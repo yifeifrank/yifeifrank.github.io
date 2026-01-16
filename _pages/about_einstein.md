@@ -1,7 +1,7 @@
 ---
 layout: about
 title: about
-permalink: /
+permalink: /about_einstein/
 subtitle: <a href='https://www.ppa.hku.hk/'>Department of Politics and Public Administration</a>, University of Hong Kong
 
 profile:
