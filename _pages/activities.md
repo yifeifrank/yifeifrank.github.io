@@ -1,12 +1,20 @@
-# Activities
-
-[About Me](./frontpage.md) | [Research](./research.md) | [Activities](./activities.md) | [CV (English)](./cv_eng.md) | [CV (Chinese)](./cv_chn.md)
-
+---
+layout: page
+permalink: /activities/
+title: activities
+nav: false
 ---
 
-## Conferences
+## Presentations
 
-- San Diego, Fudan-UCSB Young talented scholars conference, May. 6, 2025
-- Philadelphia, APSA annual meeting, Sep. 8, 2024
-- Hong Kong, Hong Kong quantitative social science workshop, Apr. 24, 2024
+### Posters
+
+- Hong Kong, New Horizons for AI Research in the Social Sciences and Humanities Conference, University of Chicago Hong Kong Campus, Jan. 26-27, 2026
+
+### Conference Talks
+
+- Vancouver, APSA Annual Meeting, Sep. 2025
+- San Diego, Fudan-UCSB Young Talented Scholars Conference, May 6, 2025
+- Philadelphia, APSA Annual Meeting, Sep. 8, 2024
+- Hong Kong, Hong Kong Quantitative Social Science Workshop, Apr. 24, 2024
 - Singapore, Lien Development Conference, November 26, 2022

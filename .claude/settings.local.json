@@ -4,7 +4,10 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "mcp__tavily__tavily_extract",
+      "WebFetch(domain:papers.ssrn.com)",
+      "mcp__tavily__tavily_search"
     ],
     "deny": [],
     "ask": []
