@@ -13,8 +13,8 @@ nav: false
 
 ### Conference Talks
 
-- Vancouver, APSA Annual Meeting, Sep. 2025
-- San Diego, Fudan-UCSB Young Talented Scholars Conference, May 6, 2025
-- Philadelphia, APSA Annual Meeting, Sep. 8, 2024
-- Hong Kong, Hong Kong Quantitative Social Science Workshop, Apr. 24, 2024
+- Vancouver, APSA Annual Meeting, Sep. 2025 — *Agentic Framework for Political Biography Extraction*
+- San Diego, Fudan-UCSB Young Talented Scholars Conference, May 6, 2025 — *Agentic Framework for Political Biography Extraction*
+- Philadelphia, APSA Annual Meeting, Sep. 8, 2024 — *Power Incubator: How An Authoritarian Anticorruption Agency Facilitates Power Sharing?*
+- Hong Kong, Hong Kong Quantitative Social Science Workshop, Apr. 24, 2024 — *Power Incubator: How An Authoritarian Anticorruption Agency Facilitates Power Sharing?*
 - Singapore, Lien Development Conference, November 26, 2022
