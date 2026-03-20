@@ -11,27 +11,10 @@ nav_order: 2
 
 ## Working Papers
 
-### Project 1: Elite Experiments
-
 <div class="publications">
-{% bibliography --query @*[key=zhu2025agentic] %}
-{% bibliography --query @*[key=zhu2025politnuggets] %}
-</div>
 
-### Project 2: Simulated Experiments
+{% bibliography %}
 
-<div class="publications">
-{% bibliography --query @*[key=wei2025silicon] %}
-{% bibliography --query @*[key=su2025consensus] %}
-</div>
-
-### Project 3: CCP Organization History Dataset
-
-I built and validated a comprehensive dataset about the central and provincial party committee members from 1978 to 2025, with detailed coding of their biographical profiles, shifting the research focus from government to party.
-
-<div class="publications">
-{% bibliography --query @*[key=zhu2025power] %}
-{% bibliography --query @*[key=feng2025party] %}
 </div>
 
 ## Presentations

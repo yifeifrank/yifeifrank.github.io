@@ -5,7 +5,7 @@
     "image": "",
     "email": "frankyifei@connect.hku.hk",
     "url": "https://yifeifrank.github.io",
-    "summary": "Ph.D. candidate in the Department of Politics and Public Administration at the University of Hong Kong. Research interests in comparative politics, political methodology, and large language models for social science.",
+    "summary": "Ph.D. candidate in the Department of Politics and Public Administration at the University of Hong Kong. Primary field is political methodology, focusing on transparent and credible use of language models to accelerate social science research. Secondary field is Chinese politics, applying language models to study elite politics at scale.",
     "location": {
       "city": "Hong Kong",
       "countryCode": "HK"
@@ -45,23 +45,22 @@
   ],
   "interests": [
     {
-      "name": "Comparative Politics",
-      "icon": "fa-solid fa-tag",
-      "keywords": [
-        "Authoritarian Politics",
-        "Personnel Management",
-        "Political Decision Making",
-        "China"
-      ]
-    },
-    {
       "name": "Political Methodology",
       "icon": "fa-solid fa-hashtag",
       "keywords": [
         "Large Language Models",
         "Text Analysis",
         "Survey Experiments",
-        "Text Annotation"
+        "Transparent and Credible AI for Social Science"
+      ]
+    },
+    {
+      "name": "Chinese Politics",
+      "icon": "fa-solid fa-tag",
+      "keywords": [
+        "Elite Politics",
+        "Personnel Management",
+        "Party Organization"
       ]
     }
   ],

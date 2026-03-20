@@ -18,9 +18,9 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi, I am a Ph.D candidate in Department of Politics and Public Administration at University of Hong Kong (HKUPPA).
+Hi, I am a Ph.D. candidate in the Department of Politics and Public Administration at the University of Hong Kong (HKUPPA).
 
-I study comparative politics and political methodology, with regional focus in China. Specifically, I study the connection between personal management system and authoritarian decision making process through texts and elite profiles at scale. My methodology research aims to build trust between language models and social science researchers, I evaluate and develop large language models systems for social science tasks, such as survey experiments and text annotation.
+My primary field is political methodology, with a focus on language models for social science. I explore ways to transparently and credibly use language models to accelerate social science research and build trust between these models and researchers. My secondary field is Chinese politics, where I apply language models to study elite politics at scale.
 
-In 2023, I received A.M. degree in development study and social policy from China Agricultural University.
+In 2023, I received an A.M. degree in development study and social policy from China Agricultural University.
 In 2020, I received an LL.B. degree in Law from Shanghai University of Finance and Economics.
