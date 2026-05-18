@@ -44,6 +44,6 @@ flowchart LR
 ## Related Papers
 
 <div class="publications">
-{% bibliography --query @*[key=zhu2025politnuggets] %}
 {% bibliography --query @*[key=zhu2025agentic] %}
+{% bibliography --query @*[key=zhu2025politnuggets] %}
 </div>
