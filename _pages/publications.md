@@ -9,11 +9,23 @@ nav_order: 2
 
 <!-- _pages/publications.md -->
 
+## Publication
+
+<div class="publications">
+
+{% bibliography --query @*[key=zhu2025politnuggets] %}
+
+</div>
+
 ## Working Papers
 
 <div class="publications">
 
-{% bibliography %}
+{% bibliography --query @*[key=zhu2025agentic] %}
+{% bibliography --query @*[key=su2025consensus] %}
+{% bibliography --query @*[key=wei2025silicon] %}
+{% bibliography --query @*[key=zhu2025power] %}
+{% bibliography --query @*[key=feng2025party] %}
 
 </div>
 
