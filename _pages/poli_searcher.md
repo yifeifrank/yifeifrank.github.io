@@ -2,7 +2,7 @@
 layout: page
 title: Poli Searcher
 permalink: /poli-searcher/
-description:
+description: Poli Searcher is Frank Yifei Zhu's agentic research pipeline for building transparent political science datasets from web sources with language models.
 nav: true
 nav_order: 4
 mermaid:
@@ -12,7 +12,7 @@ mermaid:
 
 Poli Searcher is an agentic research pipeline for building transparent political science datasets from heterogeneous web sources. It connects recursive search and evidence synthesis with downstream structured coding, so large language models can retrieve, curate, and evaluate political facts at scale. Elite biography extraction is one core application, but the same pipeline can support diverse political science dataset construction problems by changing the codebook, task instructions, and validation rules.
 
-The starting point is the agentic framework for dataset building: it defines a search-synthesis-coding pipeline and demonstrates it through political biography extraction with a complete evaluation package. PolitNuggets then sharpens that evaluation problem for search agents by specifying the benchmark, enhancing the evidence package, and proposing an automated evaluation method. Its selection for ACL 2026 reflects recognition from the computer science community.
+The starting point is the agentic framework for dataset building: it defines a search-synthesis-coding pipeline and demonstrates it through political biography extraction with a complete evaluation package. PolitNuggets then sharpens that evaluation problem for search agents by specifying the benchmark, enhancing the evidence package, and proposing an automated evaluation method. Its selection for The 64th Annual Meeting of the Association for Computational Linguistics in San Diego, California, United States reflects recognition from the computer science community.
 
 ## Project Map
 
@@ -32,7 +32,7 @@ flowchart LR
 ## Resources
 
 - [Agentic Framework for Political Biography Extraction](https://arxiv.org/abs/2603.18010): the methodological foundation for agentic political science dataset building, demonstrated through political biography extraction.
-- [PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts](https://arxiv.org/abs/2605.14002): the ACL 2026 benchmark and automated evaluation framework for search agents.
+- [PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts](https://arxiv.org/abs/2605.14002): the benchmark and automated evaluation framework for search agents selected for The 64th Annual Meeting of the Association for Computational Linguistics in San Diego, California, United States.
 - [Poli Searcher GitHub repository](https://github.com/yifeifrank/poli_searcher): the companion implementation for the deep-research/search-agent pipeline.
 - [PolitNuggets dataset on Hugging Face](https://huggingface.co/datasets/frankyifei/politnuggets): the public dataset and evaluation artifacts.
 
