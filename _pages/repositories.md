@@ -2,8 +2,10 @@
 layout: page
 permalink: /repositories/
 title: repositories
-description:
+description: Code repositories by Frank Yifei Zhu.
 nav: false
+hide_header: true
+sitemap: false
 nav_order: 4
 ---
 

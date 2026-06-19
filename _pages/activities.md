@@ -3,6 +3,8 @@ layout: page
 permalink: /activities/
 title: activities
 nav: false
+description: Presentations, posters, and conference activities by Frank Yifei Zhu.
+hide_header: true
 ---
 
 ## Presentations

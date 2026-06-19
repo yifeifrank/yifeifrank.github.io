@@ -1,12 +1,14 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
+description: Frank Yifei Zhu is a Ph.D. candidate in political science at the University of Hong Kong working on political methodology, language models for social science, and Chinese politics.
 subtitle: <a href='https://www.ppa.hku.hk/'>Department of Politics and Public Administration</a>, University of Hong Kong
 
 profile:
   align: left
   image: prof_pic.jpg
+  avoid_scaling: true
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>University of Hong Kong</p>

@@ -1,33 +1,34 @@
 ---
 layout: page
 permalink: /publications/
-title: publications
-description: Publications and working papers by Frank Yifei Zhu on political methodology, language models for social science research, political biography extraction, and Chinese elite politics.
+title: Publications
 nav: true
 nav_order: 2
+hide_header: true
 enable_publication_thumbnails: false
 max_author_limit: 6
+hide_working_paper_note: true
 ---
 
 <!-- _pages/publications.md -->
 
 ## Publication
 
-<div class="publications">
+<div class="publications compact-publications">
 
-{% bibliography --query @*[key=zhu2025politnuggets] %}
+{% bibliography --group_by none --query @*[key=zhu2025politnuggets] %}
 
 </div>
 
 ## Working Papers
 
-<div class="publications">
+<div class="publications compact-publications">
 
-{% bibliography --query @*[key=zhu2025agentic] %}
-{% bibliography --query @*[key=wei2025silicon] %}
-{% bibliography --query @*[key=zhu2025power] %}
-{% bibliography --query @*[key=feng2025party] %}
-{% bibliography --query @*[key=su2025consensus] %}
+{% bibliography --group_by none --query @*[key=zhu2025agentic] %}
+{% bibliography --group_by none --query @*[key=wei2025silicon] %}
+{% bibliography --group_by none --query @*[key=zhu2025power] %}
+{% bibliography --group_by none --query @*[key=feng2025party] %}
+{% bibliography --group_by none --query @*[key=su2025consensus] %}
 
 </div>
 

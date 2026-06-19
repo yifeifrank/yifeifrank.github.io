@@ -190,9 +190,12 @@
     <div class="periodical">
       {{ periodical | strip }}
     </div>
-    <div class="periodical">
-      {{ entry.note | strip }}
-    </div>
+    {% assign entry_note = entry.note | strip %}
+    {% unless page.hide_working_paper_note and entry_note == 'Working paper' %}
+      <div class="periodical">
+        {{ entry_note }}
+      </div>
+    {% endunless %}
 
     <!-- Links/Buttons -->
     <div class="links">
@@ -204,9 +207,6 @@
       {% if entry.abstract %}
         <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
       {% endif %}
-      {% if entry.doi %}
-        <a href="https://doi.org/{{ entry.doi }}" class="btn btn-sm z-depth-0" role="button">DOI</a>
-      {% endif %}
       {% if entry.arxiv %}
         <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
       {% endif %}
@@ -214,10 +214,14 @@
         <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
       {% endif %}
       {% if entry.html %}
+        {% assign html_label = 'HTML' %}
+        {% if entry.html contains 'ssrn.com' %}
+          {% assign html_label = 'SSRN' %}
+        {% endif %}
         {% if entry.html contains '://' %}
-          <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
+          <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button">{{ html_label }}</a>
         {% else %}
-          <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
+          <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">{{ html_label }}</a>
         {% endif %}
       {% endif %}
       {% if entry.pdf %}
@@ -260,7 +264,11 @@
         {% endif %}
       {% endif %}
       {% if entry.website %}
-        <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
+        {% assign website_label = 'Website' %}
+        {% if entry.website contains 'huggingface.co' %}
+          {% assign website_label = 'Dataset' %}
+        {% endif %}
+        <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">{{ website_label }}</a>
       {% endif %}
     </div>
     {% if site.enable_publication_badges %}

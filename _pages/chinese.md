@@ -3,7 +3,9 @@ layout: page
 title: 中文
 permalink: /chinese/
 nav: true
-nav_order: 8
+nav_order: 10
+description: Frank Yifei Zhu's Chinese-language academic profile.
+hide_header: true
 ---
 
 你好！我是香港大学政治与公共行政学系的博士候选人。
