@@ -36,10 +36,12 @@ hide_working_paper_note: true
 
 ### Posters
 
+- **May 2026** - [Yale FDS Workshop: AI for Social Science Research Methods](https://yalefds.swoogo.com/socialscience/11248177), Yale University — _PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts_
 - **January 2026** - New Horizons for AI Research in the Social Sciences and Humanities Conference, University of Chicago Hong Kong Campus
 
 ### Conference Talks
 
+- **July 2026** - The 64th Annual Meeting of the Association for Computational Linguistics, San Diego — _PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts_
 - **September 2025** - APSA Annual Meeting, Vancouver — _Agentic Framework for Political Biography Extraction_
 - **May 2025** - Fudan-UCSB Young Talented Scholars Conference, San Diego — _Agentic Framework for Political Biography Extraction_
 - **September 2024** - APSA Annual Meeting, Philadelphia — _Power Incubator: How An Authoritarian Anticorruption Agency Facilitates Power Sharing?_
