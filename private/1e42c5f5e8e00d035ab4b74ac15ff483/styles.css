@@ -165,7 +165,7 @@ button, input { font: inherit; }
 .reader-stream { color: var(--blue); font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .reader-toolbar a { flex: 0 0 auto; color: var(--blue); font-size: 11px; font-weight: 700; }
 .reader-toc { padding: 12px 28px; display: flex; flex-wrap: wrap; gap: 7px; border-bottom: 1px solid var(--line); background: #fafbfc; }
-.reader-toc a { padding: 4px 8px; border-radius: 6px; color: #647084; background: #eef1f5; font-size: 9px; }
+.reader-toc a, .reader-toc button { padding: 4px 8px; border: 0; border-radius: 6px; color: #647084; background: #eef1f5; cursor: pointer; font-size: 9px; }
 .markdown-body { max-width: 940px; padding: 30px 36px 65px; color: #364152; font-size: 14px; }
 .markdown-body h1, .markdown-body h2, .markdown-body h3 { color: var(--ink); font-family: Georgia, serif; font-weight: 500; line-height: 1.25; }
 .markdown-body h1 { margin: 0 0 22px; font-size: 32px; }

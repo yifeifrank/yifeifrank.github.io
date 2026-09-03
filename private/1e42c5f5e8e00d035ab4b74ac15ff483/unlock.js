@@ -15,7 +15,7 @@
   };
 
   async function unlock() {
-    const encodedKey = location.hash.slice(1).trim();
+    const encodedKey = location.hash.slice(1).trim().split("/", 1)[0];
     if (!encodedKey) return notFound();
     let keyBytes;
     try { keyBytes = decode(encodedKey); } catch { return notFound(); }
@@ -33,6 +33,7 @@
         decode(envelope.ciphertext),
       );
       window.JOB_SEARCH_DATA = JSON.parse(new TextDecoder().decode(plaintext));
+      window.PRIVATE_LINK_KEY = encodedKey;
       document.getElementById("private-lock-screen")?.remove();
       document.body.classList.remove("locked");
       const script = document.createElement("script");

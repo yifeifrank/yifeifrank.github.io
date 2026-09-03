@@ -9,6 +9,7 @@
 
   const hosted = data.deploymentMode !== "local";
   const edgeAuthenticated = data.deploymentMode === "online";
+  const privateLinkKey = String(window.PRIVATE_LINK_KEY || "");
   const state = {
     streamId: data.streams[0]?.id,
     reportDate: data.streams[0]?.reports[0]?.date,
@@ -25,6 +26,17 @@
   const externalUrl = value => {
     try { const url = new URL(value); return ["http:", "https:"].includes(url.protocol) ? url.href : null; }
     catch { return null; }
+  };
+  const routeFromLocation = () => {
+    const fragment = location.hash.slice(1);
+    if (!privateLinkKey) return fragment;
+    if (fragment === privateLinkKey) return "overview";
+    return fragment.startsWith(`${privateLinkKey}/`) ? fragment.slice(privateLinkKey.length + 1).split("/", 1)[0] : "overview";
+  };
+  const navigateTo = route => {
+    const fragment = privateLinkKey ? `${privateLinkKey}/${route}` : route;
+    if (location.hash.slice(1) === fragment) setRoute(route);
+    else location.hash = fragment;
   };
 
   function inlineMarkdown(text) {
@@ -259,8 +271,9 @@
     $("#reader-title").textContent = report.title;
     $("#reader-source").hidden = hosted || !report.path;
     if (report.path) $("#reader-source").href = pathUrl(report.path);
-    $("#reader-toc").innerHTML = report.sections.map(section => `<a href="#${slugify(section)}">${escapeHtml(section)}</a>`).join("");
+    $("#reader-toc").innerHTML = report.sections.map(section => `<button type="button" data-toc-target="${slugify(section)}">${escapeHtml(section)}</button>`).join("");
     $("#reader-content").innerHTML = renderMarkdown(report.markdown);
+    $$('[data-toc-target]').forEach(button => button.addEventListener("click", () => document.getElementById(button.dataset.tocTarget)?.scrollIntoView({behavior:"smooth", block:"start"})));
   }
 
   function renderReports() { renderReportTabs(); renderReportList($("#report-filter").value); renderReader(); }
@@ -297,8 +310,7 @@
   function openStream(streamId, reportDate) {
     state.streamId = streamId;
     state.reportDate = reportDate || currentStream().reports[0]?.date;
-    location.hash = "reports";
-    setRoute("reports");
+    navigateTo("reports");
     renderReports();
   }
 
@@ -308,14 +320,14 @@
     const results = [];
     list(data.evidence.opportunities).forEach(item => {
       const text = [item.title,item.employer,item.location,item.scopeReason,...list(item.roleFamilies),...list(item.researchActivities)].join(" ");
-      if (text.toLowerCase().includes(term)) results.push({type:"Opportunity",title:`${item.title} — ${item.employer}`,excerpt:item.scopeReason || item.location || "Evidence-bank opportunity",action:() => { setRoute("opportunities"); location.hash="opportunities"; showOpportunity(item.id); }});
+      if (text.toLowerCase().includes(term)) results.push({type:"Opportunity",title:`${item.title} — ${item.employer}`,excerpt:item.scopeReason || item.location || "Evidence-bank opportunity",action:() => { navigateTo("opportunities"); showOpportunity(item.id); }});
     });
     data.streams.forEach(stream => stream.reports.forEach(report => {
       const index = report.markdown.toLowerCase().indexOf(term);
       if (index >= 0 || report.title.toLowerCase().includes(term)) results.push({type:`${stream.shortLabel} · ${report.date}`,title:report.title,excerpt:report.markdown.slice(Math.max(0,index-70),Math.max(0,index-70)+240).replace(/[#*`|\n]+/g," "),action:() => openStream(stream.id, report.date)});
     }));
     list(data.evidence.terms).forEach(item => {
-      if ([item.term,item.definition,...list(item.variants)].join(" ").toLowerCase().includes(term)) results.push({type:"Search term",title:item.term,excerpt:item.definition,action:() => { location.hash="evidence"; setRoute("evidence"); $("#term-filter").value=item.term; renderTerms(); }});
+      if ([item.term,item.definition,...list(item.variants)].join(" ").toLowerCase().includes(term)) results.push({type:"Search term",title:item.term,excerpt:item.definition,action:() => { navigateTo("evidence"); $("#term-filter").value=item.term; renderTerms(); }});
     });
     $("#search-result-title").textContent = `${results.length} match${results.length === 1 ? "" : "es"} for “${query}”`;
     $("#search-results").innerHTML = results.slice(0,100).map((item,index) => `<button class="search-result" data-search-index="${index}"><span class="search-result-meta">${escapeHtml(item.type)}</span><span><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.excerpt)}</p></span></button>`).join("") || `<div class="empty">No jobs, reports, or terms matched.</div>`;
@@ -340,10 +352,18 @@
   $("#mobile-menu").addEventListener("click", () => $(".sidebar").classList.toggle("open"));
   $("#dialog-close").addEventListener("click", () => $("#opportunity-dialog").close());
   $("#opportunity-dialog").addEventListener("click", event => { if (event.target === $("#opportunity-dialog")) $("#opportunity-dialog").close(); });
-  window.addEventListener("hashchange", () => setRoute(location.hash.slice(1)));
+  document.addEventListener("click", event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+    const route = link.getAttribute("href").slice(1);
+    if (!["overview","opportunities","reports","evidence","repositories"].includes(route)) return;
+    event.preventDefault();
+    navigateTo(route);
+  });
+  window.addEventListener("hashchange", () => setRoute(routeFromLocation()));
   document.addEventListener("keydown", event => {
     if (event.key === "/" && document.activeElement.tagName !== "INPUT") { event.preventDefault(); $("#global-search").focus(); }
     if (event.key === "Escape") $("#search-overlay").classList.remove("open");
   });
-  setRoute(location.hash.slice(1) || "overview");
+  setRoute(routeFromLocation() || "overview");
 })();
