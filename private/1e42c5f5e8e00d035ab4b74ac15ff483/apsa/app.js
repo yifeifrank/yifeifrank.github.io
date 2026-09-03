@@ -298,11 +298,27 @@
     $("#repo-grid").innerHTML = list(data.repositories).map(repo => `<article class="repo-card"><span class="repo-kind">${escapeHtml(repo.kind)}</span><h2>${escapeHtml(repo.name)}</h2><p>${escapeHtml(repo.description)}</p><div class="repo-path">${escapeHtml(repo.path)}</div><div class="repo-foot"><span class="repo-git">${repo.git?.isGit ? `${escapeHtml(repo.git.branch)} · ${escapeHtml(repo.git.commit)}` : "Local collection"}</span><a class="repo-open" href="${pathUrl(repo.path)}" target="_blank" rel="noopener">Open ↗</a></div></article>`).join("");
   }
 
+  function targetJobs(item) {
+    const bankJobs = list(item.opportunityIds).map(id => list(data.evidence?.opportunities).find(candidate => candidate.id === id)).filter(Boolean).map(job => ({
+      title: job.title,
+      rankType: humanize(job.type || job.lane),
+      deadline: job.deadline,
+      scope: job.scopeReason || job.reviewRationale,
+      materials: job.requiredMaterials,
+      eligibility: job.eligibility,
+      url: job.url,
+      evidence: job.reviewDecision || job.evidenceState,
+      fitScore: job.fitScore,
+      researchScore: job.researchScore,
+    }));
+    return [...bankJobs, ...list(item.fallbackJobs)];
+  }
+
   function targetCard(item) {
-    const profile = externalUrl(item.profileUrl), photo = externalUrl(item.photo);
+    const profile = externalUrl(item.profileUrl), photo = externalUrl(item.photo), jobs = targetJobs(item), firstJob = jobs[0] || {title:item.job,url:item.jobUrl};
     return `<article class="target-card" data-target-priority="${Number(item.priority)}" tabindex="0">
       <div class="target-photo-wrap">${photo ? `<img class="target-photo" src="${escapeHtml(photo)}" alt="Official profile photo of ${escapeHtml(item.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="target-initials">${escapeHtml(item.name.split(/\s+/).map(part => part[0]).join("").slice(0,2))}</div>`}<span class="target-number">${Number(item.priority)}</span></div>
-      <div class="target-card-body"><span class="target-confidence">${escapeHtml(item.confidence)}</span><h3>${escapeHtml(item.name)}</h3><p class="target-role">${escapeHtml(item.institution)} · ${escapeHtml(item.title)}</p><strong class="target-job">${escapeHtml(item.job)}</strong><p>${escapeHtml(item.relationship)}</p><div class="target-actions">${profile ? `<a href="${escapeHtml(profile)}" target="_blank" rel="noopener noreferrer">Profile ↗</a>` : ""}<button type="button">Open field card</button></div></div>
+      <div class="target-card-body"><div class="target-labels"><span class="target-tier tier-${Number(item.tier || 3)}">Tier ${Number(item.tier || 3)}</span><span class="target-confidence">${escapeHtml(item.confidence)}</span></div><h3>${escapeHtml(item.name)}</h3><p class="target-role">${escapeHtml(item.institution)} · ${escapeHtml(item.title)}</p><strong class="target-job">${escapeHtml(firstJob.title || item.job)}</strong>${firstJob.deadline ? `<span class="target-deadline">${escapeHtml(firstJob.deadline)}</span>` : ""}${jobs.length > 1 ? `<span class="job-count">${jobs.length} affiliated openings</span>` : ""}<p>${escapeHtml(item.relationship)}</p><div class="target-actions">${profile ? `<a href="${escapeHtml(profile)}" target="_blank" rel="noopener noreferrer">Profile ↗</a>` : ""}<button type="button">Person + job details</button></div></div>
     </article>`;
   }
 
@@ -314,9 +330,14 @@
       const url = externalUrl(source.url);
       return url ? `<a class="source-card" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"><strong>${escapeHtml(source.label)}</strong><span>Open source ↗</span></a>` : "";
     }).join("");
+    const jobs = targetJobs(item).map(job => {
+      const url = externalUrl(job.url);
+      const metadata = [job.rankType, job.deadline ? `Deadline/review: ${job.deadline}` : null, job.evidence ? humanize(job.evidence) : null].filter(Boolean);
+      return `<article class="affiliated-job"><div><span>Affiliated opening</span><h3>${escapeHtml(job.title || item.job)}</h3><p>${escapeHtml(metadata.join(" · "))}</p></div>${job.scope ? `<p class="affiliated-scope">${escapeHtml(job.scope)}</p>` : ""}<div class="job-score-row">${score(job.fitScore) !== null ? `<span>CV fit <b>${score(job.fitScore)}</b></span>` : ""}${score(job.researchScore) !== null ? `<span>Research <b>${score(job.researchScore)}</b></span>` : ""}</div>${list(job.eligibility).length ? `<details><summary>Eligibility</summary><ul>${list(job.eligibility).map(value => `<li>${escapeHtml(value)}</li>`).join("")}</ul></details>` : ""}${list(job.materials).length ? `<details><summary>Application materials</summary><ul>${list(job.materials).map(value => `<li>${escapeHtml(value)}</li>`).join("")}</ul></details>` : ""}${url ? `<a class="primary-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open detailed posting ↗</a>` : ""}</article>`;
+    }).join("");
     $("#target-dialog-content").innerHTML = `<div class="target-dialog-head">${photo ? `<img src="${escapeHtml(photo)}" alt="Official profile photo of ${escapeHtml(item.name)}" referrerpolicy="no-referrer">` : ""}<div><span class="target-confidence">${escapeHtml(item.confidence)}</span><h2>${escapeHtml(item.name)}</h2><p>${escapeHtml(item.institution)} · ${escapeHtml(item.title)}</p></div></div>
       <div class="target-dialog-actions">${profileUrl ? `<a href="${escapeHtml(profileUrl)}" target="_blank" rel="noopener noreferrer">Official profile ↗</a>` : ""}${jobUrl ? `<a href="${escapeHtml(jobUrl)}" target="_blank" rel="noopener noreferrer">Job posting ↗</a>` : ""}${item.contactEmail ? `<a href="mailto:${escapeHtml(item.contactEmail)}">Email ${escapeHtml(item.contactEmail)}</a>` : ""}</div>
-      ${detailSection("Why this target", item.fit)}${detailSection("Hiring relationship", item.relationship)}${detailSection("Where to find them", item.where)}${detailSection("Recognition note", item.recognition)}
+      ${detailSection("Why this target", item.fit)}${detailSection("Hiring relationship", item.relationship)}${detailSection("Where to find them", item.where)}${detailSection("Recognition note", item.recognition)}${jobs ? `<section class="detail-section"><h3>Affiliated job postings</h3><div class="affiliated-job-stack">${jobs}</div></section>` : ""}
       <section class="detail-section"><h3>Your tailored opener</h3><div class="script-box"><p>${escapeHtml(item.opening)}</p><button type="button" data-copy-text="${escapeHtml(item.opening)}">Copy</button></div></section>
       ${sources ? `<section class="detail-section"><h3>Evidence</h3><div class="source-stack">${sources}</div></section>` : ""}`;
     $("#target-dialog-content [data-copy-text]")?.addEventListener("click", event => copyText(event.currentTarget.dataset.copyText, event.currentTarget));
@@ -354,7 +375,7 @@
     const tenureCount = verified.filter(item => item.lane === "academic_tenure_track").length;
     const postdocCount = verified.filter(item => item.lane === "academic_postdoc").length;
     $("#academic-market-count").textContent = `${verified.length} verified records`;
-    $("#academic-market-explainer").textContent = `The four cards below are people with a useful APSA hiring connection. The evidence bank is much larger: ${tenureCount} verified tenure-line records and ${postdocCount} verified postdoctoral records, with duplicates and uncertain leads retained separately for review.`;
+    $("#academic-market-explainer").textContent = `The recognition cards are a conference field guide, not the complete market. The evidence bank is much larger: ${tenureCount} verified tenure-line records and ${postdocCount} verified postdoctoral records, with duplicates and uncertain leads retained separately for review.`;
     const spotlightIds = [
       "bu-ai-politics-32578",
       "northwestern-quant-political-methodology-2598",
