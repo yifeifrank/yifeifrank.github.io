@@ -298,8 +298,67 @@
     $("#repo-grid").innerHTML = list(data.repositories).map(repo => `<article class="repo-card"><span class="repo-kind">${escapeHtml(repo.kind)}</span><h2>${escapeHtml(repo.name)}</h2><p>${escapeHtml(repo.description)}</p><div class="repo-path">${escapeHtml(repo.path)}</div><div class="repo-foot"><span class="repo-git">${repo.git?.isGit ? `${escapeHtml(repo.git.branch)} · ${escapeHtml(repo.git.commit)}` : "Local collection"}</span><a class="repo-open" href="${pathUrl(repo.path)}" target="_blank" rel="noopener">Open ↗</a></div></article>`).join("");
   }
 
+  function targetCard(item) {
+    const profile = externalUrl(item.profileUrl), photo = externalUrl(item.photo);
+    return `<article class="target-card" data-target-priority="${Number(item.priority)}" tabindex="0">
+      <div class="target-photo-wrap">${photo ? `<img class="target-photo" src="${escapeHtml(photo)}" alt="Official profile photo of ${escapeHtml(item.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="target-initials">${escapeHtml(item.name.split(/\s+/).map(part => part[0]).join("").slice(0,2))}</div>`}<span class="target-number">${Number(item.priority)}</span></div>
+      <div class="target-card-body"><span class="target-confidence">${escapeHtml(item.confidence)}</span><h3>${escapeHtml(item.name)}</h3><p class="target-role">${escapeHtml(item.institution)} · ${escapeHtml(item.title)}</p><strong class="target-job">${escapeHtml(item.job)}</strong><p>${escapeHtml(item.relationship)}</p><div class="target-actions">${profile ? `<a href="${escapeHtml(profile)}" target="_blank" rel="noopener noreferrer">Profile ↗</a>` : ""}<button type="button">Open field card</button></div></div>
+    </article>`;
+  }
+
+  function showTarget(priority) {
+    const item = list(data.networking?.targets).find(candidate => Number(candidate.priority) === Number(priority));
+    if (!item) return;
+    const photo = externalUrl(item.photo), jobUrl = externalUrl(item.jobUrl), profileUrl = externalUrl(item.profileUrl);
+    const sources = list(item.sources).map(source => {
+      const url = externalUrl(source.url);
+      return url ? `<a class="source-card" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"><strong>${escapeHtml(source.label)}</strong><span>Open source ↗</span></a>` : "";
+    }).join("");
+    $("#target-dialog-content").innerHTML = `<div class="target-dialog-head">${photo ? `<img src="${escapeHtml(photo)}" alt="Official profile photo of ${escapeHtml(item.name)}" referrerpolicy="no-referrer">` : ""}<div><span class="target-confidence">${escapeHtml(item.confidence)}</span><h2>${escapeHtml(item.name)}</h2><p>${escapeHtml(item.institution)} · ${escapeHtml(item.title)}</p></div></div>
+      <div class="target-dialog-actions">${profileUrl ? `<a href="${escapeHtml(profileUrl)}" target="_blank" rel="noopener noreferrer">Official profile ↗</a>` : ""}${jobUrl ? `<a href="${escapeHtml(jobUrl)}" target="_blank" rel="noopener noreferrer">Job posting ↗</a>` : ""}<a href="mailto:${escapeHtml(item.contactEmail)}">Email ${escapeHtml(item.contactEmail)}</a></div>
+      ${detailSection("Why this target", item.fit)}${detailSection("Hiring relationship", item.relationship)}${detailSection("Where to find them", item.where)}${detailSection("Recognition note", item.recognition)}
+      <section class="detail-section"><h3>Your tailored opener</h3><div class="script-box"><p>${escapeHtml(item.opening)}</p><button type="button" data-copy-text="${escapeHtml(item.opening)}">Copy</button></div></section>
+      ${sources ? `<section class="detail-section"><h3>Evidence</h3><div class="source-stack">${sources}</div></section>` : ""}`;
+    $("#target-dialog-content [data-copy-text]")?.addEventListener("click", event => copyText(event.currentTarget.dataset.copyText, event.currentTarget));
+    const dialog = $("#target-dialog");
+    if (typeof dialog.showModal === "function") dialog.showModal(); else dialog.setAttribute("open", "");
+  }
+
+  async function copyText(value, button) {
+    try {
+      await navigator.clipboard.writeText(value);
+      const prior = button.textContent; button.textContent = "Copied";
+      setTimeout(() => { button.textContent = prior; }, 1200);
+    } catch { button.textContent = "Select and copy"; }
+  }
+
+  function renderNetworking() {
+    const networking = data.networking || {}, event = networking.event || {}, introductions = networking.introductions || {};
+    $("#networking-event-note").textContent = event.note || "";
+    $("#networking-event-time").textContent = `${event.date ? formatDate(event.date) : ""} · ${event.time || ""}`;
+    $("#networking-event-name").textContent = event.name || "APSA networking";
+    $("#networking-event-link").href = externalUrl(event.url) || "#";
+    const variants = [["tenSecond","10 seconds"],["twentySecond","20 seconds"],["openHouse","Open House"],["exit","Exit line"]];
+    let selected = "tenSecond";
+    const selectIntro = key => {
+      selected = key; $("#intro-text").textContent = introductions[key] || "";
+      $$('[data-intro-key]').forEach(button => button.classList.toggle("active", button.dataset.introKey === key));
+    };
+    $("#intro-tabs").innerHTML = variants.map(([key,label]) => `<button type="button" data-intro-key="${key}">${label}</button>`).join("");
+    $$('[data-intro-key]').forEach(button => button.addEventListener("click", () => selectIntro(button.dataset.introKey)));
+    selectIntro(selected);
+    $("#copy-intro").onclick = event => copyText(introductions[selected] || "", event.currentTarget);
+    $("#intro-guidance").innerHTML = list(introductions.guidance).map(item => `<p>${escapeHtml(item)}</p>`).join("");
+    $("#target-grid").innerHTML = list(networking.targets).sort((a,b) => Number(a.priority)-Number(b.priority)).map(targetCard).join("");
+    $$('[data-target-priority]').forEach(card => {
+      const open = event => { if (event.target.closest("a")) return; showTarget(card.dataset.targetPriority); };
+      card.addEventListener("click", open); card.addEventListener("keydown", event => { if (["Enter"," "].includes(event.key)) { event.preventDefault(); showTarget(card.dataset.targetPriority); } });
+    });
+    $("#follow-up-list").innerHTML = list(introductions.followUps).map((question,index) => `<div><span>0${index+1}</span><p>${escapeHtml(question)}</p></div>`).join("");
+  }
+
   function setRoute(route) {
-    const allowed = ["overview","opportunities","reports","evidence",...(hosted ? [] : ["repositories"])];
+    const allowed = ["overview","networking","opportunities","reports","evidence",...(hosted ? [] : ["repositories"])];
     const valid = allowed.includes(route) ? route : "overview";
     $$(".view").forEach(view => view.classList.toggle("active", view.dataset.view === valid));
     $$('[data-route]').forEach(link => link.classList.toggle("active", link.dataset.route === valid));
@@ -342,7 +401,7 @@
     $("#install-app").addEventListener("click", async () => { if (!prompt) return; prompt.prompt(); await prompt.userChoice; prompt = null; $("#install-app").hidden = true; });
   }
 
-  renderOverview(); populateFilters(); renderOpportunities(); renderReports(); renderEvidence(); renderRepositories(); registerInstall();
+  renderOverview(); renderNetworking(); populateFilters(); renderOpportunities(); renderReports(); renderEvidence(); renderRepositories(); registerInstall();
   ["#opportunity-search","#lane-filter","#region-filter","#status-filter","#sort-filter"].forEach(selector => $(selector).addEventListener(selector.includes("search") ? "input" : "change", () => renderOpportunities()));
   $("#load-more").addEventListener("click", () => { state.opportunityLimit += 36; renderOpportunities(false); });
   $("#report-filter").addEventListener("input", event => renderReportList(event.target.value));
@@ -352,11 +411,13 @@
   $("#mobile-menu").addEventListener("click", () => $(".sidebar").classList.toggle("open"));
   $("#dialog-close").addEventListener("click", () => $("#opportunity-dialog").close());
   $("#opportunity-dialog").addEventListener("click", event => { if (event.target === $("#opportunity-dialog")) $("#opportunity-dialog").close(); });
+  $("#target-dialog-close").addEventListener("click", () => $("#target-dialog").close());
+  $("#target-dialog").addEventListener("click", event => { if (event.target === $("#target-dialog")) $("#target-dialog").close(); });
   document.addEventListener("click", event => {
     const link = event.target.closest('a[href^="#"]');
     if (!link) return;
     const route = link.getAttribute("href").slice(1);
-    if (!["overview","opportunities","reports","evidence","repositories"].includes(route)) return;
+    if (!["overview","networking","opportunities","reports","evidence","repositories"].includes(route)) return;
     event.preventDefault();
     navigateTo(route);
   });

@@ -23,6 +23,7 @@ sitemap: false
       </a>
       <nav class="primary-nav" aria-label="Primary navigation">
         <a href="#overview" data-route="overview"><span>⌂</span> Overview</a>
+        <a href="#networking" data-route="networking"><span>◉</span> Meet at APSA</a>
         <a href="#opportunities" data-route="opportunities"><span>◇</span> Opportunities</a>
         <a href="#reports" data-route="reports"><span>▤</span> Reports</a>
         <a href="#evidence" data-route="evidence"><span>◎</span> Vocabulary</a>
@@ -79,6 +80,24 @@ sitemap: false
           <div class="panel-head"><div><p class="eyebrow">WORKING SET</p><h2>Important documents</h2></div></div>
           <div class="document-grid" id="document-grid"></div>
         </section>
+      </section>
+
+      <section class="view" id="view-networking" data-view="networking">
+        <div class="networking-hero">
+          <div><p class="eyebrow">LIVE APSA FIELD GUIDE</p><h1>People to meet,<br><em>and what to say.</em></h1><p id="networking-event-note"></p></div>
+          <a id="networking-event-link" class="event-chip" href="#" target="_blank" rel="noopener noreferrer"><strong id="networking-event-time"></strong><span id="networking-event-name"></span><small>Official event page ↗</small></a>
+        </div>
+
+        <section class="intro-panel">
+          <div class="intro-head"><div><p class="eyebrow">START HERE</p><h2>Your opening introduction</h2></div><div class="intro-tabs" id="intro-tabs"></div></div>
+          <div class="intro-copy"><p id="intro-text"></p><button type="button" id="copy-intro">Copy</button></div>
+          <div class="intro-guidance" id="intro-guidance"></div>
+        </section>
+
+        <div class="target-toolbar"><div><p class="eyebrow">RECOGNITION LIST</p><h2>Priority targets</h2></div><p>Ordered by hiring connection and fit. Tap a card for the exact opener and evidence.</p></div>
+        <div class="target-grid" id="target-grid"></div>
+
+        <section class="panel question-panel"><div class="panel-head"><div><p class="eyebrow">KEEP IT A CONVERSATION</p><h2>Good follow-up questions</h2></div></div><div id="follow-up-list" class="follow-up-list"></div></section>
       </section>
 
       <section class="view" id="view-opportunities" data-view="opportunities">
@@ -139,6 +158,10 @@ sitemap: false
       <dialog class="opportunity-dialog" id="opportunity-dialog">
         <button class="dialog-close" id="dialog-close" aria-label="Close opportunity">×</button>
         <div id="dialog-content"></div>
+      </dialog>
+      <dialog class="opportunity-dialog target-dialog" id="target-dialog">
+        <button class="dialog-close" id="target-dialog-close" aria-label="Close target">×</button>
+        <div id="target-dialog-content"></div>
       </dialog>
     </main>
   </div>
