@@ -1,0 +1,170 @@
+---
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#142237">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Opportunity Research Desk</title>
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="locked">
+  <main id="private-lock-screen" role="status">404 · Not Found</main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Opportunity Research Desk home">
+        <span class="brand-mark">OR</span>
+        <span><strong>Opportunity</strong><small>Research Desk</small></span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="#overview" data-route="overview"><span>⌂</span> Overview</a>
+        <a href="#networking" data-route="networking"><span>◉</span> Meet at APSA</a>
+        <a href="#opportunities" data-route="opportunities"><span>◇</span> Opportunities</a>
+        <a href="#reports" data-route="reports"><span>▤</span> Reports</a>
+        <a href="#evidence" data-route="evidence"><span>◎</span> Vocabulary</a>
+        <a href="#repositories" data-route="repositories" id="repository-nav"><span>⌘</span> Repositories</a>
+      </nav>
+      <div class="sidebar-foot">
+        <span class="status-dot"></span>
+        <div><strong id="deployment-label">Research workspace</strong><small id="build-time">Loading…</small></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Toggle navigation">☰</button>
+        <div class="global-search">
+          <span>⌕</span>
+          <input id="global-search" type="search" placeholder="Search jobs, reports, and terms…" autocomplete="off">
+          <kbd>/</kbd>
+        </div>
+        <button class="install-button" id="install-app" hidden>Install app</button>
+        <a class="source-link" id="workspace-link" href="/" target="_blank">Open workspace ↗</a>
+        <form action="/auth/logout" method="post" id="logout-form" hidden><button class="logout-button" type="submit">Sign out</button></form>
+      </header>
+
+      <section class="view active" id="view-overview" data-view="overview">
+        <div class="hero">
+          <div>
+            <p class="eyebrow" id="hero-eyebrow">RESEARCH CONTROL CENTER</p>
+            <h1>Your opportunity landscape,<br><em>wherever you are.</em></h1>
+            <p class="hero-copy">Daily acquisition reports, verified evidence, deadlines, and search vocabulary in one tablet-ready research desk.</p>
+          </div>
+          <div class="hero-date"><span id="today-date"></span><small>Latest indexed cycle</small></div>
+        </div>
+
+        <div class="metrics" id="metrics"></div>
+
+        <div class="dashboard-grid">
+          <section class="panel stream-panel">
+            <div class="panel-head"><div><p class="eyebrow">REPORT COLLECTIONS</p><h2>Latest research streams</h2></div><a href="#reports">Browse all →</a></div>
+            <div class="stream-list" id="stream-list"></div>
+          </section>
+          <section class="panel deadline-panel">
+            <div class="panel-head"><div><p class="eyebrow">ACADEMIC CALENDAR</p><h2>Deadline window</h2></div></div>
+            <div id="deadline-list" class="deadline-list"></div>
+          </section>
+        </div>
+
+        <section class="panel priority-panel">
+          <div class="panel-head"><div><p class="eyebrow">REVIEWED LEADS</p><h2>Priority opportunities</h2></div><a href="#opportunities">View database →</a></div>
+          <div class="priority-grid" id="priority-grid"></div>
+        </section>
+
+        <section class="panel documents-panel" id="documents-panel">
+          <div class="panel-head"><div><p class="eyebrow">WORKING SET</p><h2>Important documents</h2></div></div>
+          <div class="document-grid" id="document-grid"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-networking" data-view="networking">
+        <div class="networking-hero">
+          <div><p class="eyebrow">LIVE APSA FIELD GUIDE</p><h1>People to meet,<br><em>and what to say.</em></h1><p id="networking-event-note"></p></div>
+          <a id="networking-event-link" class="event-chip" href="#" target="_blank" rel="noopener noreferrer"><strong id="networking-event-time"></strong><span id="networking-event-name"></span><small>Official event page ↗</small></a>
+        </div>
+
+        <section class="intro-panel">
+          <div class="intro-head"><div><p class="eyebrow">START HERE</p><h2>Your opening introduction</h2></div><div class="intro-tabs" id="intro-tabs"></div></div>
+          <div class="intro-copy"><p id="intro-text"></p><button type="button" id="copy-intro">Copy</button></div>
+          <div class="intro-guidance" id="intro-guidance"></div>
+        </section>
+
+        <div class="target-toolbar"><div><p class="eyebrow">RECOGNITION LIST</p><h2>Priority targets</h2></div><p>Ordered by hiring connection and fit. Tap a card for the exact opener and evidence.</p></div>
+        <div class="target-grid" id="target-grid"></div>
+
+        <section class="panel question-panel"><div class="panel-head"><div><p class="eyebrow">KEEP IT A CONVERSATION</p><h2>Good follow-up questions</h2></div></div><div id="follow-up-list" class="follow-up-list"></div></section>
+      </section>
+
+      <section class="view" id="view-opportunities" data-view="opportunities">
+        <div class="page-head"><div><p class="eyebrow">EVIDENCE-BACKED DATABASE</p><h1>Search the opportunity bank.</h1></div><p>Filter by lane, region, evidence state, or reviewer decision. Open a card for fit, risks, and source history.</p></div>
+        <div class="opportunity-controls">
+          <input id="opportunity-search" type="search" placeholder="Title, employer, method, location…">
+          <select id="lane-filter" aria-label="Filter by lane"><option value="">All lanes</option></select>
+          <select id="region-filter" aria-label="Filter by region"><option value="">All regions</option></select>
+          <select id="status-filter" aria-label="Filter by status"><option value="">All evidence states</option></select>
+          <select id="sort-filter" aria-label="Sort opportunities"><option value="priority">Priority</option><option value="newest">Newest</option><option value="fit">Best fit</option><option value="employer">Employer</option></select>
+        </div>
+        <div class="result-summary" id="opportunity-summary"></div>
+        <div class="opportunity-grid" id="opportunity-grid"></div>
+        <button class="load-more" id="load-more" hidden>Show more</button>
+      </section>
+
+      <section class="view" id="view-reports" data-view="reports">
+        <div class="page-head"><div><p class="eyebrow">REPORT LIBRARY</p><h1>Daily research, without the file hunt.</h1></div><p>Choose a stream and date. Reports remain searchable even when the underlying lead has changed.</p></div>
+        <div class="report-tabs" id="report-tabs"></div>
+        <div class="report-workspace">
+          <aside class="report-index">
+            <div class="index-filter"><input id="report-filter" type="search" placeholder="Filter dates or titles"></div>
+            <div id="report-list"></div>
+          </aside>
+          <article class="report-reader">
+            <div class="reader-toolbar">
+              <div><span class="reader-stream" id="reader-stream"></span><h2 id="reader-title">Select a report</h2></div>
+              <a id="reader-source" href="#" target="_blank" rel="noopener">Source Markdown ↗</a>
+            </div>
+            <div class="reader-toc" id="reader-toc"></div>
+            <div class="markdown-body" id="reader-content"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-evidence" data-view="evidence">
+        <div class="page-head"><div><p class="eyebrow">SEARCH MEMORY</p><h1>Evidence, vocabulary, and adjacent scope.</h1></div><p>Terms are learned by acquisition agents and governed by the reviewer before they alter future search behavior.</p></div>
+        <div class="evidence-hero" id="evidence-hero"></div>
+        <div class="dashboard-grid evidence-grid">
+          <section class="panel"><div class="panel-head"><div><p class="eyebrow">TERMINOLOGY</p><h2>Term review status</h2></div></div><div id="term-statuses" class="bar-list"></div></section>
+          <section class="panel"><div class="panel-head"><div><p class="eyebrow">SCOPE DISCOVERY</p><h2>Adjacent search proposals</h2></div></div><div id="scope-list" class="scope-list"></div></section>
+        </div>
+        <section class="panel term-panel"><div class="panel-head"><div><p class="eyebrow">QUERY LEXICON</p><h2>Discovered search vocabulary</h2></div><input id="term-filter" type="search" placeholder="Filter terminology"></div><div id="term-grid" class="term-grid"></div></section>
+      </section>
+
+      <section class="view" id="view-repositories" data-view="repositories">
+        <div class="page-head"><div><p class="eyebrow">RELATED REPOSITORIES</p><h1>Know where every piece lives.</h1></div><p>Local-only source directories and Git metadata.</p></div>
+        <div class="repo-grid" id="repo-grid"></div>
+      </section>
+
+      <section class="search-overlay" id="search-overlay" aria-hidden="true">
+        <div class="search-results-shell">
+          <div class="search-results-head"><div><p class="eyebrow">GLOBAL SEARCH</p><h2 id="search-result-title">Matching records</h2></div><button id="close-search" aria-label="Close search">×</button></div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+      </section>
+
+      <dialog class="opportunity-dialog" id="opportunity-dialog">
+        <button class="dialog-close" id="dialog-close" aria-label="Close opportunity">×</button>
+        <div id="dialog-content"></div>
+      </dialog>
+      <dialog class="opportunity-dialog target-dialog" id="target-dialog">
+        <button class="dialog-close" id="target-dialog-close" aria-label="Close target">×</button>
+        <div id="target-dialog-content"></div>
+      </dialog>
+    </main>
+  </div>
+  <script src="unlock.js"></script>
+</body>
+</html>
