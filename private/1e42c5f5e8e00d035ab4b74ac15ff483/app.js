@@ -349,6 +349,32 @@
     selectIntro(selected);
     $("#copy-intro").onclick = event => copyText(introductions[selected] || "", event.currentTarget);
     $("#intro-guidance").innerHTML = list(introductions.guidance).map(item => `<p>${escapeHtml(item)}</p>`).join("");
+    const academic = list(data.evidence?.opportunities).filter(item => ["academic_tenure_track","academic_postdoc"].includes(item.lane));
+    const verified = academic.filter(item => item.reviewDecision === "verified_active");
+    const tenureCount = verified.filter(item => item.lane === "academic_tenure_track").length;
+    const postdocCount = verified.filter(item => item.lane === "academic_postdoc").length;
+    $("#academic-market-count").textContent = `${verified.length} verified records`;
+    $("#academic-market-explainer").textContent = `The four cards below are people with a useful APSA hiring connection. The evidence bank is much larger: ${tenureCount} verified tenure-line records and ${postdocCount} verified postdoctoral records, with duplicates and uncertain leads retained separately for review.`;
+    const spotlightIds = [
+      "bu-ai-politics-32578",
+      "northwestern-quant-political-methodology-2598",
+      "columbia-political-methodology-190515",
+      "umn-international-relations-methodology-375762",
+      "umass-media-technology-politics-509521",
+      "sjsu-political-communication-ai-560558",
+      "university-alabama-comparative-politics-530396",
+      "upenn-picl-computational-politics-postdoc-2026",
+    ];
+    const spotlight = spotlightIds.map(id => academic.find(item => item.id === id)).filter(Boolean);
+    $("#academic-market-grid").innerHTML = spotlight.map(item => opportunityCard(item, true)).join("") || `<div class="empty">Open the Opportunities view for the full academic inventory.</div>`;
+    attachOpportunityCards($("#academic-market-grid"));
+    $$('[data-academic-lane]').forEach(button => button.addEventListener("click", () => {
+      $("#lane-filter").value = button.dataset.academicLane;
+      $("#opportunity-search").value = "";
+      renderOpportunities();
+      navigateTo("opportunities");
+    }));
+    $('[data-academic-reports]')?.addEventListener("click", event => { event.preventDefault(); openStream("academic"); });
     $("#target-grid").innerHTML = list(networking.targets).sort((a,b) => Number(a.priority)-Number(b.priority)).map(targetCard).join("");
     $$('[data-target-priority]').forEach(card => {
       const open = event => { if (event.target.closest("a")) return; showTarget(card.dataset.targetPriority); };
