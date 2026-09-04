@@ -22,7 +22,7 @@ social: true # includes social icons at the bottom of the page
 
 Hi, I am a Ph.D. candidate in the Department of Politics and Public Administration at the University of Hong Kong (HKUPPA).
 
-I work on AI for social science and Chinese politics. I design and evaluate LLM-based systems for transparent and scalable social science discovery, especially systems for building structured datasets from fragmented sources. I also evaluate and improve LLMs' social reasoning.
+I work on AI for social science and Chinese politics. I design and evaluate LLM-based systems for transparent and scalable social science discovery, especially systems for building structured datasets from fragmented sources.
 
 Substantively, I study Chinese politics, with a focus on political elites and institutions.
 
