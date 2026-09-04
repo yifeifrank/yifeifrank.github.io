@@ -12,7 +12,7 @@ hide_working_paper_note: true
 
 <!-- _pages/publications.md -->
 
-## Revise and resubmit
+## Invited to resubmit
 
 <div class="publications compact-publications">
 
