@@ -12,11 +12,29 @@ hide_working_paper_note: true
 
 <!-- _pages/publications.md -->
 
-## Publication
+## Revise and resubmit
+
+<div class="publications compact-publications">
+
+{% bibliography --group_by none --query @*[key=zhu2025agentic] %}
+
+</div>
+
+## Publications
 
 <div class="publications compact-publications">
 
 {% bibliography --group_by none --query @*[key=zhu2025politnuggets] %}
+{% bibliography --group_by none --query @*[key=wei2025silicon] %}
+{% bibliography --group_by none --query @*[key=zang2026mobilizing] %}
+
+</div>
+
+## Book
+
+<div class="publications compact-publications">
+
+{% bibliography --group_by none --query @*[key=zhu2026llmbook] %}
 
 </div>
 
@@ -24,8 +42,6 @@ hide_working_paper_note: true
 
 <div class="publications compact-publications">
 
-{% bibliography --group_by none --query @*[key=zhu2025agentic] %}
-{% bibliography --group_by none --query @*[key=wei2025silicon] %}
 {% bibliography --group_by none --query @*[key=zhu2025power] %}
 {% bibliography --group_by none --query @*[key=feng2025party] %}
 {% bibliography --group_by none --query @*[key=su2025consensus] %}
