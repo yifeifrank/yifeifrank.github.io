@@ -22,9 +22,9 @@ social: true # includes social icons at the bottom of the page
 
 Hi, I am a Ph.D. candidate in the Department of Politics and Public Administration at the University of Hong Kong (HKUPPA).
 
-My research asks how large language models can enable new forms of social science discovery. I develop and evaluate LLM-based methods for building datasets from fragmented evidence and studying questions that have been difficult to investigate at scale. Chinese politics is both a substantive focus and a demanding empirical setting for this work, particularly in research on political elites and institutions.
+I use AI to make social science discovery more transparent and scalable. My work develops language-model methods for finding and organizing fragmented evidence, building new datasets, and studying questions that are difficult to examine at scale. Substantively, I work on large-scale projects in Chinese politics, especially political elites and institutions.
 
-On the LLM side, I focus on evaluating and improving social reasoning: how well models interpret social and political contexts, reason about people and institutions, and produce evidence that researchers can scrutinize and validate.
+I also study how large language models reason about social and political life, and how that reasoning can be evaluated and improved.
 
 In 2023, I received an A.M. degree in development study and social policy from China Agricultural University.
 In 2020, I received an LL.B. degree in Law from Shanghai University of Finance and Economics.
