@@ -24,6 +24,7 @@ sitemap: false
       <nav class="primary-nav" aria-label="Primary navigation">
         <a href="#overview" data-route="overview"><span>⌂</span> Overview</a>
         <a href="#networking" data-route="networking"><span>◉</span> Meet at APSA</a>
+        <a href="#landscape" data-route="landscape"><span>▦</span> Landscape</a>
         <a href="#opportunities" data-route="opportunities"><span>◇</span> Opportunities</a>
         <a href="#reports" data-route="reports"><span>▤</span> Reports</a>
         <a href="#evidence" data-route="evidence"><span>◎</span> Vocabulary</a>
@@ -94,18 +95,53 @@ sitemap: false
           <div class="intro-guidance" id="intro-guidance"></div>
         </section>
 
-        <section class="panel academic-market-panel">
-          <div class="panel-head"><div><p class="eyebrow">FULL MARKET, SEPARATE FROM NETWORKING</p><h2>Four people do not mean four openings</h2></div><span class="market-count" id="academic-market-count"></span></div>
-          <p class="market-explainer" id="academic-market-explainer"></p>
-          <div class="market-actions"><button type="button" data-academic-lane="academic_tenure_track">Browse tenure-line roles</button><button type="button" data-academic-lane="academic_postdoc">Browse postdocs</button><a href="#reports" data-academic-reports>Read daily academic reports →</a></div>
-          <div class="market-spotlight-head"><div><p class="eyebrow">BREADTH SAMPLE</p><h3>Research universities, broader institutions, and programs</h3></div><p>Selected for fit and market coverage—not institutional prestige.</p></div>
-          <div class="priority-grid academic-market-grid" id="academic-market-grid"></div>
+        <section class="panel networking-market-link">
+          <div><p class="eyebrow">MARKET STRATEGY</p><h2>People here are not the whole market.</h2><p>The networking guide is for recognition and conversation. Review every research-oriented search, fit lane, deadline, and uncertainty in the separate academic landscape.</p></div>
+          <a href="#landscape">Open Academic Landscape →</a>
         </section>
 
         <div class="target-toolbar"><div><p class="eyebrow">RECOGNITION LIST</p><h2>Priority targets</h2></div><p>Ordered by hiring connection and fit. Tap a card for the exact opener and evidence.</p></div>
         <div class="target-grid" id="target-grid"></div>
 
         <section class="panel question-panel"><div class="panel-head"><div><p class="eyebrow">KEEP IT A CONVERSATION</p><h2>Good follow-up questions</h2></div></div><div id="follow-up-list" class="follow-up-list"></div></section>
+      </section>
+
+      <section class="view" id="view-landscape" data-view="landscape">
+        <div class="landscape-hero">
+          <div><p class="eyebrow">ACADEMIC MARKET LANDSCAPE</p><h1>Fit first.<br><em>Research orientation second.</em></h1><p>AI and computational political methodology first; China-focused comparative politics next, especially where methods are explicitly valued. Prestige is context, not the ranking rule.</p></div>
+          <div class="landscape-status"><strong id="landscape-active-count">—</strong><span>verified active academic records</span><small id="landscape-last-checked">Loading latest review…</small></div>
+        </div>
+
+        <div class="landscape-metrics" id="landscape-metrics"></div>
+
+        <section class="landscape-section">
+          <div class="section-heading"><div><p class="eyebrow">PORTFOLIO LANES</p><h2>Where your profile meets demand</h2></div><p>Tap a lane to narrow the action queue. Hybrid China-plus-methods searches receive the same priority as the strongest computational-methods roles.</p></div>
+          <div class="lane-grid" id="landscape-lanes"></div>
+        </section>
+
+        <section class="panel matrix-panel">
+          <div class="panel-head"><div><p class="eyebrow">FIT × ENVIRONMENT</p><h2>Do not confuse rank with opportunity</h2></div><p>Counts use separate judgments about the advertisement and the research environment.</p></div>
+          <div class="fit-matrix" id="landscape-matrix"></div>
+        </section>
+
+        <section class="landscape-section action-queue-section">
+          <div class="section-heading"><div><p class="eyebrow">RESEARCH-FIRST ACTION QUEUE</p><h2>What deserves your time</h2></div><button type="button" class="reset-strategy" id="landscape-reset">Reset to strategy</button></div>
+          <div class="landscape-controls" id="landscape-controls">
+            <select id="landscape-status-filter" aria-label="Landscape evidence status"><option value="verified">Verified active</option><option value="all">Include credible leads</option></select>
+            <select id="landscape-lane-filter" aria-label="Landscape portfolio lane"><option value="">Primary lanes</option></select>
+            <select id="landscape-fit-filter" aria-label="Advertised fit"><option value="">All advertised fit</option><option value="direct">Direct</option><option value="strong">Strong</option><option value="partial">Partial</option><option value="unknown">Unknown</option></select>
+            <select id="landscape-environment-filter" aria-label="Research environment"><option value="research_first">Research-first</option><option value="balanced">Balanced</option><option value="teaching_heavy">Teaching-heavy</option><option value="unknown">Unknown</option><option value="">All environments</option></select>
+            <select id="landscape-cv-filter" aria-label="Recommended CV"><option value="">Either CV</option><option value="methods">Methods CV</option><option value="comparative">Comparative CV</option></select>
+          </div>
+          <div class="result-summary" id="landscape-summary"></div>
+          <div class="landscape-grid" id="landscape-grid"></div>
+          <button class="load-more" id="landscape-load-more" hidden>Show more</button>
+        </section>
+
+        <section class="panel coverage-panel">
+          <div class="panel-head"><div><p class="eyebrow">COVERAGE AND UNCERTAINTY</p><h2>What the bank still cannot tell us</h2></div><a href="#reports" data-academic-reports>Open latest academic report →</a></div>
+          <div class="coverage-grid" id="landscape-coverage"></div>
+        </section>
       </section>
 
       <section class="view" id="view-opportunities" data-view="opportunities">

@@ -14,6 +14,7 @@
     streamId: data.streams[0]?.id,
     reportDate: data.streams[0]?.reports[0]?.date,
     opportunityLimit: 36,
+    landscapeLimit: 18,
     filteredOpportunities: [],
   };
   const $ = selector => document.querySelector(selector);
@@ -157,9 +158,9 @@
 
   function attachOpportunityCards(root = document) {
     root.querySelectorAll("[data-opportunity-id]").forEach(card => {
-      const open = () => showOpportunity(card.dataset.opportunityId);
+      const open = event => { if (event?.target?.closest?.("a")) return; showOpportunity(card.dataset.opportunityId); };
       card.addEventListener("click", open);
-      card.addEventListener("keydown", event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); open(); } });
+      card.addEventListener("keydown", event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); open(event); } });
     });
   }
 
@@ -370,31 +371,6 @@
     selectIntro(selected);
     $("#copy-intro").onclick = event => copyText(introductions[selected] || "", event.currentTarget);
     $("#intro-guidance").innerHTML = list(introductions.guidance).map(item => `<p>${escapeHtml(item)}</p>`).join("");
-    const academic = list(data.evidence?.opportunities).filter(item => ["academic_tenure_track","academic_postdoc"].includes(item.lane));
-    const verified = academic.filter(item => item.reviewDecision === "verified_active");
-    const tenureCount = verified.filter(item => item.lane === "academic_tenure_track").length;
-    const postdocCount = verified.filter(item => item.lane === "academic_postdoc").length;
-    $("#academic-market-count").textContent = `${verified.length} verified records`;
-    $("#academic-market-explainer").textContent = `The recognition cards are a conference field guide, not the complete market. The evidence bank is much larger: ${tenureCount} verified tenure-line records and ${postdocCount} verified postdoctoral records, with duplicates and uncertain leads retained separately for review.`;
-    const spotlightIds = [
-      "bu-ai-politics-32578",
-      "northwestern-quant-political-methodology-2598",
-      "columbia-political-methodology-190515",
-      "umn-international-relations-methodology-375762",
-      "umass-media-technology-politics-509521",
-      "sjsu-political-communication-ai-560558",
-      "university-alabama-comparative-politics-530396",
-      "upenn-picl-computational-politics-postdoc-2026",
-    ];
-    const spotlight = spotlightIds.map(id => academic.find(item => item.id === id)).filter(Boolean);
-    $("#academic-market-grid").innerHTML = spotlight.map(item => opportunityCard(item, true)).join("") || `<div class="empty">Open the Opportunities view for the full academic inventory.</div>`;
-    attachOpportunityCards($("#academic-market-grid"));
-    $$('[data-academic-lane]').forEach(button => button.addEventListener("click", () => {
-      $("#lane-filter").value = button.dataset.academicLane;
-      $("#opportunity-search").value = "";
-      renderOpportunities();
-      navigateTo("opportunities");
-    }));
     $('[data-academic-reports]')?.addEventListener("click", event => { event.preventDefault(); openStream("academic"); });
     $("#target-grid").innerHTML = list(networking.targets).sort((a,b) => Number(a.priority)-Number(b.priority)).map(targetCard).join("");
     $$('[data-target-priority]').forEach(card => {
@@ -404,8 +380,130 @@
     $("#follow-up-list").innerHTML = list(introductions.followUps).map((question,index) => `<div><span>0${index+1}</span><p>${escapeHtml(question)}</p></div>`).join("");
   }
 
+  const landscapeLaneLabels = {
+    ai_computational_methodology: "AI / computational methodology",
+    china_plus_methods_comparative: "China / East Asia + methods",
+    broader_china_comparative: "Research-first China / comparative",
+    traditional_methodology: "Traditional methodology",
+    adjacent_research_oriented: "Adjacent research-oriented",
+    postdocs: "Postdocs and fellowships",
+  };
+  const primaryLandscapeLanes = new Set(["ai_computational_methodology", "china_plus_methods_comparative"]);
+  const landscapeItems = () => list(data.academicLandscape?.opportunities);
+
+  function landscapeDeadlineDays(value) {
+    const match = String(value || "").match(/20\d{2}-\d{2}-\d{2}/);
+    return match ? Math.ceil((new Date(`${match[0]}T23:59:59`).valueOf() - Date.now()) / 86400000) : null;
+  }
+
+  function landscapeCard(item) {
+    const url = externalUrl(item.official_url);
+    const bank = item.bank_id ? `data-opportunity-id="${escapeHtml(item.bank_id)}" tabindex="0"` : "";
+    return `<article class="landscape-card" ${bank}>
+      <div class="landscape-card-top"><span class="lane-pill">${escapeHtml(landscapeLaneLabels[item.lane] || humanize(item.lane))}</span><span class="priority-rank">#${escapeHtml(item.priority_rank || "—")}</span></div>
+      <h3>${escapeHtml(item.institution)}</h3><p class="landscape-role">${escapeHtml(item.title)}</p>
+      <div class="assessment-row"><span>Advertised <b>${escapeHtml(humanize(item.advertised_fit_label))}</b></span><span>Potential <b>${escapeHtml(humanize(item.potential_fit_label))}</b></span><span>Environment <b>${escapeHtml(humanize(item.environment))}</b></span><span>CV <b>${escapeHtml(humanize(item.cv_route))}</b></span></div>
+      <p class="landscape-fit">${escapeHtml(item.fit_reason)}</p>
+      ${item.main_risk ? `<p class="risk-note"><strong>Watch:</strong> ${escapeHtml(item.main_risk)}</p>` : ""}
+      <div class="landscape-card-foot"><span>${escapeHtml(item.deadline || "No fixed deadline")}</span>${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Official posting ↗</a>` : ""}</div>
+    </article>`;
+  }
+
+  function renderLandscapeMetrics() {
+    const active = landscapeItems().filter(item => item.status === "verified_active");
+    const urgent = active.filter(item => { const days = landscapeDeadlineDays(item.deadline); return days !== null && days >= 0 && days <= 14; });
+    const metrics = [
+      [active.filter(item => item.appointment === "tenure_line").length,"Tenure-line","Verified active","tenure"],
+      [active.filter(item => item.lane === "ai_computational_methodology").length,"AI / computational","Primary lane","ai_computational_methodology"],
+      [active.filter(item => item.lane === "china_plus_methods_comparative").length,"China + methods","Co-primary lane","china_plus_methods_comparative"],
+      [active.filter(item => item.lane === "postdocs").length,"Postdocs","Research programs","postdocs"],
+      [urgent.length,"Due in 14 days","Immediate window","urgent"],
+    ];
+    $("#landscape-metrics").innerHTML = metrics.map(([value,label,note,filter]) => `<button type="button" class="landscape-metric" data-landscape-metric="${filter}"><strong>${value}</strong><span>${label}</span><small>${note}</small></button>`).join("");
+    $$('[data-landscape-metric]').forEach(button => button.addEventListener("click", () => {
+      const value = button.dataset.landscapeMetric;
+      $("#landscape-lane-filter").value = landscapeLaneLabels[value] ? value : "all";
+      $("#landscape-environment-filter").value = "";
+      renderLandscapeResults(true, value);
+    }));
+  }
+
+  function renderLandscapeLanes() {
+    const active = landscapeItems().filter(item => item.status === "verified_active");
+    const descriptions = {
+      ai_computational_methodology: "AI as political-science methodology, computational methods, NLP/text-as-data, measurement, datasets, surveys, experiments, networks, or causal inference.",
+      china_plus_methods_comparative: "China or East Asia plus explicit demand for rigorous, quantitative, computational, experimental, or text-based methods.",
+      broader_china_comparative: "Strong China or comparative substance in a research setting, without a distinct methods preference.",
+      traditional_methodology: "Requires portable method development and broad quantitative teaching capacity—not merely an LLM application.",
+      adjacent_research_oriented: "Research-intensive intellectual neighbors requiring a truthful disciplinary or substantive bridge.",
+      postdocs: "Center- and project-based research programs, conditional on defense and degree-conferral timing.",
+    };
+    $("#landscape-lanes").innerHTML = Object.keys(landscapeLaneLabels).map(lane => {
+      const found = active.filter(item => item.lane === lane);
+      return `<button type="button" class="lane-card" data-landscape-lane="${lane}"><span>${found.length} verified</span><h3>${escapeHtml(landscapeLaneLabels[lane])}</h3><p>${escapeHtml(descriptions[lane])}</p><small>${escapeHtml(found.slice(0,3).map(item => item.institution).join(" · ") || "No active records")}</small></button>`;
+    }).join("");
+    $$('[data-landscape-lane]').forEach(button => button.addEventListener("click", () => { $("#landscape-lane-filter").value = button.dataset.landscapeLane; $("#landscape-environment-filter").value = ""; renderLandscapeResults(); }));
+  }
+
+  function renderLandscapeMatrix() {
+    const items = landscapeItems().filter(item => item.status === "verified_active");
+    const fits = [["direct","Direct advertised fit"],["strong","Strong advertised fit"],["partial","Partial / unknown fit"]];
+    const environments = [["research_first","Research-first"],["balanced","Balanced"],["teaching_heavy","Teaching-heavy / unclear"]];
+    $("#landscape-matrix").innerHTML = `<div class="matrix-corner">Fit ↓ · Environment →</div>${environments.map(([,label]) => `<div class="matrix-axis">${label}</div>`).join("")}${fits.map(([fit,label]) => `<div class="matrix-axis row-axis">${label}</div>${environments.map(([environment]) => { const found = items.filter(item => (fit === "partial" ? ["partial","unknown"].includes(item.advertised_fit_label) : item.advertised_fit_label === fit) && (environment === "teaching_heavy" ? ["teaching_heavy","unknown"].includes(item.environment) : item.environment === environment)); return `<button type="button" class="fit-cell" data-matrix-fit="${fit}" data-matrix-environment="${environment}"><strong>${found.length}</strong><span>${escapeHtml(found.slice(0,2).map(item => item.institution).join(" · ") || "No records")}</span></button>`; }).join("")}`).join("")}`;
+    $$('[data-matrix-fit]').forEach(button => button.addEventListener("click", () => { $("#landscape-fit-filter").value = button.dataset.matrixFit; $("#landscape-environment-filter").value = button.dataset.matrixEnvironment; $("#landscape-lane-filter").value = "all"; renderLandscapeResults(); }));
+  }
+
+  function renderLandscapeResults(reset = true, metric = null) {
+    if (reset) state.landscapeLimit = 18;
+    const status = $("#landscape-status-filter").value, lane = $("#landscape-lane-filter").value;
+    const fit = $("#landscape-fit-filter").value, environment = $("#landscape-environment-filter").value, cv = $("#landscape-cv-filter").value;
+    const items = landscapeItems().filter(item => {
+      const evidenceOk = status === "all" ? !["closed","stale","rejected"].includes(item.status) : item.status === "verified_active";
+      const laneOk = lane === "all" ? true : lane ? item.lane === lane : primaryLandscapeLanes.has(item.lane);
+      const fitOk = !fit || (fit === "partial" ? ["partial","unknown"].includes(item.advertised_fit_label) : item.advertised_fit_label === fit);
+      const environmentOk = !environment || (environment === "teaching_heavy" ? ["teaching_heavy","unknown"].includes(item.environment) : item.environment === environment);
+      const cvOk = !cv || item.cv_route === cv || item.cv_route === "either";
+      const days = landscapeDeadlineDays(item.deadline);
+      return evidenceOk && laneOk && fitOk && environmentOk && cvOk && (metric !== "urgent" || (days !== null && days >= 0 && days <= 14)) && (metric !== "tenure" || item.appointment === "tenure_line");
+    }).sort((a,b) => Number(a.priority_rank || 999) - Number(b.priority_rank || 999));
+    $("#landscape-summary").textContent = `${items.length} research-market records · showing ${Math.min(items.length,state.landscapeLimit)} · prestige does not affect this order`;
+    $("#landscape-grid").innerHTML = items.slice(0,state.landscapeLimit).map(landscapeCard).join("") || `<div class="empty">No records match this strategic view. Broaden a filter or reset.</div>`;
+    $("#landscape-load-more").hidden = items.length <= state.landscapeLimit;
+    attachOpportunityCards($("#landscape-grid"));
+  }
+
+  function renderLandscapeCoverage() {
+    const items = landscapeItems(), active = items.filter(item => item.status === "verified_active");
+    const stats = [
+      [items.length,"Curated records","Deduplicated landscape"],
+      [items.length-active.length,"Not verified-active","Visible when broadened"],
+      [active.filter(item => /not stated|unresolved|unknown/i.test(item.eligibility || "")).length,"Sponsorship unclear","Never infer authorization"],
+      [active.filter(item => /not stated|unknown/i.test(item.teaching_burden || "")).length,"Teaching load unclear","Needs employer evidence"],
+      [active.filter(item => item.main_risk).length,"Recorded cautions","Fit is not eligibility"],
+    ];
+    $("#landscape-coverage").innerHTML = stats.map(([value,label,note]) => `<div><strong>${value}</strong><span>${escapeHtml(label)}</span><small>${escapeHtml(note)}</small></div>`).join("");
+  }
+
+  function resetLandscape() {
+    $("#landscape-status-filter").value = "verified";
+    $("#landscape-lane-filter").value = "";
+    $("#landscape-fit-filter").value = "";
+    $("#landscape-environment-filter").value = "research_first";
+    $("#landscape-cv-filter").value = "";
+    renderLandscapeResults();
+  }
+
+  function renderLandscape() {
+    const landscape = data.academicLandscape || {};
+    if (!landscape.available) { $("#landscape-grid").innerHTML = `<div class="empty">Academic landscape data is unavailable. Rebuild the dashboard.</div>`; return; }
+    $("#landscape-active-count").textContent = landscape.counts?.verifiedActive ?? "—";
+    $("#landscape-last-checked").textContent = `Reviewed ${formatDate(landscape.asOf)}`;
+    $("#landscape-lane-filter").innerHTML = `<option value="">Primary lanes</option><option value="all">All portfolio lanes</option>` + Object.entries(landscapeLaneLabels).map(([value,label]) => `<option value="${value}">${escapeHtml(label)}</option>`).join("");
+    renderLandscapeMetrics(); renderLandscapeLanes(); renderLandscapeMatrix(); renderLandscapeResults(); renderLandscapeCoverage();
+  }
+
   function setRoute(route) {
-    const allowed = ["overview","networking","opportunities","reports","evidence",...(hosted ? [] : ["repositories"])];
+    const allowed = ["overview","networking","landscape","opportunities","reports","evidence",...(hosted ? [] : ["repositories"])];
     const valid = allowed.includes(route) ? route : "overview";
     $$(".view").forEach(view => view.classList.toggle("active", view.dataset.view === valid));
     $$('[data-route]').forEach(link => link.classList.toggle("active", link.dataset.route === valid));
@@ -448,9 +546,12 @@
     $("#install-app").addEventListener("click", async () => { if (!prompt) return; prompt.prompt(); await prompt.userChoice; prompt = null; $("#install-app").hidden = true; });
   }
 
-  renderOverview(); renderNetworking(); populateFilters(); renderOpportunities(); renderReports(); renderEvidence(); renderRepositories(); registerInstall();
+  renderOverview(); renderNetworking(); renderLandscape(); populateFilters(); renderOpportunities(); renderReports(); renderEvidence(); renderRepositories(); registerInstall();
   ["#opportunity-search","#lane-filter","#region-filter","#status-filter","#sort-filter"].forEach(selector => $(selector).addEventListener(selector.includes("search") ? "input" : "change", () => renderOpportunities()));
   $("#load-more").addEventListener("click", () => { state.opportunityLimit += 36; renderOpportunities(false); });
+  ["#landscape-status-filter","#landscape-lane-filter","#landscape-fit-filter","#landscape-environment-filter","#landscape-cv-filter"].forEach(selector => $(selector).addEventListener("change", () => renderLandscapeResults()));
+  $("#landscape-reset").addEventListener("click", resetLandscape);
+  $("#landscape-load-more").addEventListener("click", () => { state.landscapeLimit += 18; renderLandscapeResults(false); });
   $("#report-filter").addEventListener("input", event => renderReportList(event.target.value));
   $("#term-filter").addEventListener("input", renderTerms);
   $("#global-search").addEventListener("input", event => showSearch(event.target.value));
@@ -464,7 +565,7 @@
     const link = event.target.closest('a[href^="#"]');
     if (!link) return;
     const route = link.getAttribute("href").slice(1);
-    if (!["overview","networking","opportunities","reports","evidence","repositories"].includes(route)) return;
+    if (!["overview","networking","landscape","opportunities","reports","evidence","repositories"].includes(route)) return;
     event.preventDefault();
     navigateTo(route);
   });
