@@ -1449,3 +1449,23 @@ figure.cover {
     color: #23212d !important;
   }
 }
+
+
+// Compact text-first research lists; no reserved thumbnail column.
+.compact-research h2 { font-size: 1.35rem; line-height: 1.35; margin: 1.25rem 0 0.65rem; }
+.compact-research p { line-height: 1.55; margin-bottom: 0.65rem; }
+.publications.compact-publications {
+  margin-top: 0.45rem;
+  ol.bibliography {
+    margin: 0;
+    padding-left: 1.1rem;
+    > li { margin-bottom: 0.9rem; padding-left: 0.1rem; }
+    .title { line-height: 1.4; }
+    .author, .periodical { line-height: 1.45; margin-bottom: 0.1rem; }
+    .links { margin-top: 0.25rem; }
+    .links a.btn { padding: 0.1rem 0.4rem; margin: 0 0.2rem 0.2rem 0; }
+  }
+}
+@media (max-width: 575.98px) {
+  .compact-research h2 { font-size: 1.2rem; }
+}
