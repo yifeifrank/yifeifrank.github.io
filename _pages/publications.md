@@ -12,21 +12,24 @@ hide_working_paper_note: true
 
 <!-- _pages/publications.md -->
 
-## Invited to resubmit
-
-<div class="publications compact-publications">
-
-{% bibliography --group_by none --query @*[key=zhu2025agentic] %}
-
-</div>
-
-## Publications
+## Published and accepted papers {#published-papers}
 
 <div class="publications compact-publications">
 
 {% bibliography --group_by none --query @*[key=zhu2025politnuggets] %}
-{% bibliography --group_by none --query @*[key=wei2025silicon] %}
 {% bibliography --group_by none --query @*[key=zang2026mobilizing] %}
+{% bibliography --group_by none --query @*[key=wei2025silicon] %}
+
+</div>
+
+## Working papers {#working-papers}
+
+<div class="publications compact-publications">
+
+{% bibliography --group_by none --query @*[key=zhu2025agentic] %}
+{% bibliography --group_by none --query @*[key=zhu2025power] %}
+{% bibliography --group_by none --query @*[key=feng2025party] %}
+{% bibliography --group_by none --query @*[key=su2025consensus] %}
 
 </div>
 
@@ -35,16 +38,6 @@ hide_working_paper_note: true
 <div class="publications compact-publications">
 
 {% bibliography --group_by none --query @*[key=zhu2026llmbook] %}
-
-</div>
-
-## Working Papers
-
-<div class="publications compact-publications">
-
-{% bibliography --group_by none --query @*[key=zhu2025power] %}
-{% bibliography --group_by none --query @*[key=feng2025party] %}
-{% bibliography --group_by none --query @*[key=su2025consensus] %}
 
 </div>
 
