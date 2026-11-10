@@ -29,9 +29,9 @@ hide_working_paper_note: true
 <div class="publications compact-publications">
 
 {% bibliography --group_by none --query @*[key=zhu2025agentic] %}
+{% bibliography --group_by none --query @*[key=zhu2026siliconsubjects] %}
 {% bibliography --group_by none --query @*[key=zhu2025power] %}
 {% bibliography --group_by none --query @*[key=feng2025party] %}
-{% bibliography --group_by none --query @*[key=su2025consensus] %}
 
 </div>
 
