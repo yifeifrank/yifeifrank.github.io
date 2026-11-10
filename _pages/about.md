@@ -12,7 +12,6 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>University of Hong Kong</p>
-    <p>Department of Politics and Public Administration</p>
     <p>Hong Kong</p>
 
 news: false # includes a list of news items
