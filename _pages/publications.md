@@ -10,6 +10,8 @@ max_author_limit: 6
 hide_working_paper_note: true
 ---
 
+<div class="compact-publication-page" markdown="1">
+
 <!-- _pages/publications.md -->
 
 ## Published and accepted papers {#published-papers}
@@ -55,3 +57,5 @@ hide_working_paper_note: true
 - **September 2024** - APSA Annual Meeting, Philadelphia — _Power Incubator: How An Authoritarian Anticorruption Agency Facilitates Power Sharing?_
 - **April 2024** - Hong Kong Quantitative Social Science Workshop, Hong Kong — _Power Incubator: How An Authoritarian Anticorruption Agency Facilitates Power Sharing?_
 - **November 2022** - Lien Development Conference, Singapore
+
+</div>

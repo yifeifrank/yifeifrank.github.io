@@ -1491,3 +1491,18 @@ figure.cover {
     font-size: 1.2rem;
   }
 }
+
+
+// Keep publication section labels quieter than the paper titles.
+.compact-publication-page h2 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-top: 1.25rem;
+  margin-bottom: 0.65rem;
+}
+
+@media (max-width: 575.98px) {
+  .compact-publication-page h2 {
+    font-size: 1.15rem;
+  }
+}
