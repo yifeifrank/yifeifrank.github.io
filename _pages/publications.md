@@ -45,10 +45,11 @@ hide_working_paper_note: true
 
 ## Presentations
 
-- Hong Kong, Asian PolMeth, University of Hong Kong, Jan. 8, 2027 (scheduled poster).
-- Hong Kong University of Science and Technology, Dec. 15, 2026: scheduled talk on frontiers in LLM simulation for social science.
-- Boston, APSA Global Forum, Sep. 4, 2026: conference paper, _Party Organizers: Provincial Organizational Department Heads from 1949 to 2025_ (with Jiangnan Zhu). [Program](https://img1.wsimg.com/blobby/go/f773a5b8-38dd-45c3-8743-a0a6e7211cc4/downloads/2ee47694-48d5-4c9e-b56c-7d66043b386f/26%20APSAGlobal_Forum%20Sep2026%20%281%29.pdf?ver=1791518713626).
-- University of Rhode Island, Department of Political Science, September 2026: guest talk, _Agentic Framework for Political Biography Extraction_. [Host announcement](https://web.uri.edu/politicalscience/2026/09/16/psc-hosts-two-guest-speakers-for-research-presentations/).
+- **January 2027** - Asian PolMeth, University of Hong Kong (scheduled poster, January 8).
+- **December 2026** - Hong Kong University of Science and Technology — _Frontiers on LLM Simulation for Social Science_ (scheduled talk, December 15).
+- **October 2026** - [Annual Conference on AI, Large Language Models, and the Social Sciences (LLMSS)](https://coms.events/epsa-llm-26/en/day_3.html), City University of Hong Kong — _Agentic Framework for Political Biography Extraction_ (presenter and session chair).
+- **September 2026** - APSA Global Forum, Boston — _Party Organizers: Provincial Organizational Department Heads from 1949 to 2025_ (with Jiangnan Zhu). [Program](https://img1.wsimg.com/blobby/go/f773a5b8-38dd-45c3-8743-a0a6e7211cc4/downloads/2ee47694-48d5-4c9e-b56c-7d66043b386f/26%20APSAGlobal_Forum%20Sep2026%20%281%29.pdf?ver=1791518713626).
+- **September 2026** - University of Rhode Island, Department of Political Science — _Agentic Framework for Political Biography Extraction_ (guest talk). [Host announcement](https://web.uri.edu/politicalscience/2026/09/16/psc-hosts-two-guest-speakers-for-research-presentations/).
 - **July 2026** - The 64th Annual Meeting of the Association for Computational Linguistics, San Diego — _PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts_
 - **May 2026** - [Yale FDS Workshop: AI for Social Science Research Methods](https://yalefds.swoogo.com/socialscience/11248177), Yale University — _PolitNuggets: Benchmarking Agentic Discovery of Long-Tail Political Facts_ (poster).
 - **January 2026** - New Horizons for AI Research in the Social Sciences and Humanities Conference, University of Chicago Hong Kong Campus (poster).
