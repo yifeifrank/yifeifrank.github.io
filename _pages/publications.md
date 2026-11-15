@@ -53,7 +53,7 @@ hide_working_paper_note: true
 - **July 2026** - The 64th Annual Meeting of the Association for Computational Linguistics, San Diego.
 - **May 2026** - [Yale FDS Workshop: AI for Social Science Research Methods](https://yalefds.swoogo.com/socialscience/Presentations), Yale University.
 - **April 2026** - [ECPR Joint Sessions of Workshops](https://ecpr.eu/Events/Event/workshopdetails/16809), University of Innsbruck. [Program](https://ecpr.eu/Events/Event/PaperDetails/86633).
-- **January 2026** - New Horizons for AI Research in the Social Sciences and Humanities Conference, University of Chicago Hong Kong Campus.
+- **January 2026** - New Horizons for AI Research in the Social Sciences and Humanities Conference, University of Chicago.
 - **September 2025** - APSA Annual Meeting, Vancouver.
 - **May 2025** - Fudan-UCSD Young Talented Scholars Conference, San Diego.
 - **September 2024** - APSA Annual Meeting, Philadelphia.
