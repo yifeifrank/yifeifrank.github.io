@@ -35,7 +35,7 @@ hide_working_paper_note: true
 
 </div>
 
-## Book
+## Book chapters
 
 <div class="publications compact-publications">
 
